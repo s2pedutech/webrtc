@@ -6,12 +6,12 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
 app.get('/', function (req, res) {
    res.send('Hello World');
 })
-app.listen(port,ip, function () {
+var server = app.listen(port,ip, function () {
    console.log('Example app listening on ip!: ' + ip + ', port: ' + port )
 })
 
 var WebSocketServer = ws.Server,
-  wss = new WebSocketServer({port: 40510})
+  wss = new WebSocketServer({ server })
 wss.on('connection', function (ws) {
   ws.on('message', function (message) {
     console.log('received: %s', message)
