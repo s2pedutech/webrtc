@@ -1,8 +1,9 @@
 const HTTPS_PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var server_ip_address = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-
+var express = require('express')
+var app = express()
 const fs = require('fs');
-const https = require('https');
+
 const WebSocket = require('ws');
 const WebSocketServer = WebSocket.Server;
 
@@ -28,8 +29,15 @@ const handleRequest = function(request, response) {
   }
 }; 
 
-const httpsServer = https.createServer(serverConfig, handleRequest);
-var server = httpsServer.listen(HTTPS_PORT, server_ip_address);
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+var server = app.listen(HTTPS_PORT,server_ip_address, function () {
+   console.log('Example app listening on ip!: ' + server_ip_address + ', port: ' + HTTPS_PORT )
+})
+
+//const httpsServer = https.createServer(serverConfig, handleRequest);
+//var server = httpsServer.listen(HTTPS_PORT, server_ip_address);
 
 // ----------------------------------------------------------------------------------------
 
